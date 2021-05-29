@@ -23,3 +23,29 @@ for i in range(1, t.shape[0]):
 print(t)
 print(tp)
 print(tk)
+
+######### Permutacje
+perm = np.array([2,3])
+
+
+def get_permutation(arr: np.array, permutaion : np.array):
+    """
+    Generuje macierz z zamienionymi kolumnami (w_r w OneNote)
+
+    Parameters
+    ----------
+    arr : np.array
+        Macierz którą permutujemy.
+
+    permutaion : np.array
+        Lista identyfikująca permutację. Zawierają indeksy elementów, które
+        mają być zwrócone jako pierwsze, pozostałe są zwracane w kolejności
+        występowania.
+
+    Returns
+    -------
+    np.array
+        Macierz z kolumnami zamienionymi zgodnie z podaną permutacją.
+    """
+    p = np.array([x for x in range(0, arr.shape[1])])
+    return arr[:,np.concatenate((permutaion, np.setdiff1d(p, permutaion)))]
