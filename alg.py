@@ -49,3 +49,16 @@ def get_permutation(arr: np.array, permutaion : np.array):
     """
     p = np.array([x for x in range(0, arr.shape[1])])
     return arr[:,np.concatenate((permutaion, np.setdiff1d(p, permutaion)))]
+
+
+r = [0] # Permutation
+phi_index = 0 # Phi index
+p = np.array([x for x in range(0, t.shape[1])]) # Columns index
+k = np.array([x for x in range(0, t.shape[0])]) # Rows index
+cols = np.setdiff1d(p, r) # Excluded columns
+print(cols)
+
+print(tk[phi_index, len(r)-1])
+print(np.sum(t[phi_index, cols]))
+print(np.min(np.sum(t[:,cols][np.setdiff1d(k, r),:],axis=0)))
+
