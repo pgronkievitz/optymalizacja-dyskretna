@@ -8,6 +8,10 @@ documentclass: report
 lang: pl
 reference-location: section
 bibliography: bibliography.bib
+papersize: A4
+toc: true
+toc-depth: 2
+subject: Problem szeregowania
 ---
 # Czym jest problem szeregowania?
 
