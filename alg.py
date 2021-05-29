@@ -53,12 +53,14 @@ def get_permutation(arr: np.array, permutaion : np.array):
 
 r = [0] # Permutation
 phi_index = 0 # Phi index
+t = get_permutation(t, r)
 p = np.array([x for x in range(0, t.shape[1])]) # Columns index
 k = np.array([x for x in range(0, t.shape[0])]) # Rows index
 cols = np.setdiff1d(p, r) # Excluded columns
 print(cols)
-
+print(t)
 print(tk[phi_index, len(r)-1])
 print(np.sum(t[phi_index, cols]))
-print(np.min(np.sum(t[:,cols][np.setdiff1d(k, r),:],axis=0)))
+print(np.min(np.sum(t[:,len(r):][np.setdiff1d(k, phi_index),:],axis=0)))
+print(t[:,len(r):][np.setdiff1d(k, phi_index),:])
 
