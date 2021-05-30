@@ -1,5 +1,5 @@
 import numpy as np
-from alg import t, max_phi
+from phi import t, max_phi
 
 
 class Node(object):
@@ -16,9 +16,17 @@ class Node(object):
     def __str__(self):
         return str(self.data)
 
-    def get_index(self):
+    def get_index(self) -> list:
+        """
+        Zwraca index liścia (listę punków wokół których był rozwijany).
+
+        Returns
+        -------
+        list
+            Lista liści
+        """
         if self.index is not None:
-            return [self.index] + self.parent.get_index()
+            return self.parent.get_index() + [self.index]
         else:
             return []
 
@@ -28,8 +36,10 @@ class Node(object):
 
         """
         n = [x for x in range(0, t.shape[1])]
-        nodes = [Node(max_phi(t, self.get_index() + [x]), self, x) for x in
-             np.setdiff1d(n, self.get_index())]
+        index = self.get_index()
+
+        nodes = [Node(max_phi(t, index + [x]), self, x) for x in
+                 np.setdiff1d(n, index)]
         for node in nodes:
             self.add_child(node)
 
@@ -43,9 +53,12 @@ class Node(object):
             Lista Node
         """
         if len(self.children) == 0:
-            return self
+            return [self]
         else:
-            return [child.get_leafs() for child in self.children]
+            l = []
+            for child in self.children:
+                l.extend(child.get_leafs())
+            return l
 
     def get_min_leaf(self):
         """
@@ -62,4 +75,13 @@ class Node(object):
 tree = Node(None, None, None)
 print(tree)
 tree.expand()
-min(tree.get_leafs(), key = lambda node : node.data)
+# min(tree.get_leafs(), key = lambda node : node.data)
+upper_bound = 100000
+
+upper_bound = min(
+    list(filter(lambda node: node.data <= upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs())),
+    key=lambda node: node.data).data
+
+lis = list(filter(lambda node: node.data <= upper_bound and len(node.get_index()) < t.shape[1] - 1, tree.get_leafs()))
+
+min(lis, key=lambda node: node.data)
