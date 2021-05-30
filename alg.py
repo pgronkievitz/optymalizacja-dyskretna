@@ -33,6 +33,8 @@ def phi(time_cost : np.ndarray, w_r : np.array, phi_index : int):
     """
     Oblicza phi dla zadanej macierzy czasów, permutacji.
 
+    TODO: można obliczyć wszystkie phi na raz, bez obliczania tp i tk, co przyspieszy algorytm.
+
     Parameterss
     ----------
     time_cost : np.ndarray
