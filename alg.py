@@ -29,14 +29,11 @@ def get_permutation(arr: np.array, permutaion: np.array):
     return arr[:, np.concatenate((permutaion, np.setdiff1d(p, permutaion)))]
 
 
-def phi(time_cost : np.ndarray, w_r : np.array, phi_index : int):
+def max_phi(time_cost : np.ndarray, w_r : np.array):
     """
-    Oblicza phi dla zadanej macierzy czasów, permutacji.
-
-    TODO: można obliczyć wszystkie phi na raz, bez obliczania tp i tk, co przyspieszy algorytm.
+    Oblicza wszystkie phi dla zadanej macierzy czasów, permutacji.
 
     Parameterss
-    ----------
     time_cost : np.ndarray
         Macierz czasów wykonania prac dla poszczególnych brygad w mieszkaniach.
     w_r : np.array
@@ -54,6 +51,30 @@ def phi(time_cost : np.ndarray, w_r : np.array, phi_index : int):
 
     tp, tk = job_matrices(time_cost)
 
+    return max([phi(time_cost, tk, w_r, i) for i in range(0, time_cost.shape[0])])
+
+
+def phi(time_cost, tk, w_r, phi_index):
+    """
+    Oblicza phi dla zadanej macierzy czasów, permutacji.
+
+    Parameterss
+    ----------
+    time_cost : np.ndarray
+        Macierz czasów wykonania prac dla poszczególnych brygad w mieszkaniach (po permutacji!!!!!)
+    tk : np.array
+        Macierz czasów końcowych.
+    w_r : np.array
+        Permutacja.
+    phi_index : int
+        Numer phi. Tj. phi_1 to 0, phi_2 to 1 itp...
+
+    Returns
+    -------
+    phi : int
+        Phi.
+
+    """
     if phi_index == 0:
         suma = np.sum(time_cost[phi_index,])
     else:
@@ -89,28 +110,4 @@ def job_matrices(time_cost : np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
     return tp, tk
 
-
-assert (phi(t, [0], 0)) == 31
-assert (phi(t, [1], 0)) == 32
-assert (phi(t, [2], 0)) == 31
-
-assert (phi(t, [0], 1)) == 30
-assert (phi(t, [1], 1)) == 31
-assert (phi(t, [2], 1)) == 29
-
-assert (phi(t, [0], 2)) == 33
-assert (phi(t, [1], 2)) == 34
-assert (phi(t, [2], 2)) == 33
-
-assert (phi(t, [0, 1], 0)) == 34
-assert (phi(t, [0, 2], 0)) == 31
-assert (phi(t, [0, 3], 0)) == 31
-
-assert (phi(t, [0, 2, 1], 0)) == 36
-assert (phi(t, [0, 2, 3], 0)) == 31
-
-assert (phi(t, [0, 2, 1], 1)) == 35
-assert (phi(t, [0, 2, 3], 1)) == 35
-
-assert (phi(t, [0, 2, 1], 2)) == 33
-assert (phi(t, [0, 2, 3], 2)) == 35
+print(max_phi(t, [0]))
