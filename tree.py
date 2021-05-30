@@ -1,8 +1,9 @@
 import numpy as np
-from phi import t, max_phi
+from phi import max_phi, t
 
 
 class Node(object):
+
     def __init__(self, data, parent, index):
         self.parent = parent
         self.children = []
@@ -73,15 +74,21 @@ class Node(object):
 
 
 tree = Node(None, None, None)
-print(tree)
 tree.expand()
-# min(tree.get_leafs(), key = lambda node : node.data)
 upper_bound = 100000
+while expandable_leafs := list(
+        filter(lambda node: node.data <= upper_bound and len(node.get_index()) < t.shape[1] - 1, tree.get_leafs())):
 
-upper_bound = min(
-    list(filter(lambda node: node.data <= upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs())),
-    key=lambda node: node.data).data
+    possible_upper = list(
+        filter(lambda node: node.data <= upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs()))
+    if len(possible_upper):
+        upper_bound = min(possible_upper, key=lambda node: node.data).data
 
-lis = list(filter(lambda node: node.data <= upper_bound and len(node.get_index()) < t.shape[1] - 1, tree.get_leafs()))
+    min(expandable_leafs, key=lambda node: node.data).expand()
 
-min(lis, key=lambda node: node.data)
+answers = list(
+    filter(lambda node: node.data == upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs()))
+
+n = [x for x in range(0, t.shape[1])]
+print(answers)
+print([node.get_index() + np.setdiff1d(n, node.get_index()).tolist() for node in answers])
