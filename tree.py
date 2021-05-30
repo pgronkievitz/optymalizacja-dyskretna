@@ -13,9 +13,6 @@ class Node(object):
     def add_child(self, obj):
         self.children.append(obj)
 
-    def __repr__(self):
-        return str(self.data)
-
     def __str__(self):
         return str(self.data)
 
@@ -27,7 +24,7 @@ class Node(object):
 
     def expand(self):
         """
-        Expands tree by generating its children.
+        Rozszerza drzewo w obecnym node (dodaje liście i oblicza max_phi).
 
         """
         n = [x for x in range(0, t.shape[1])]
@@ -36,5 +33,33 @@ class Node(object):
         for node in nodes:
             self.add_child(node)
 
+    def get_leafs(self):
+        """
+        Zwraca wszystkie liście poddrzewa.
+
+        Returns
+        -------
+        list
+            Lista Node
+        """
+        if len(self.children) == 0:
+            return self
+        else:
+            return [child.get_leafs() for child in self.children]
+
+    def get_min_leaf(self):
+        """
+        Zwraca liść z minimalnym kosztem.
+
+        Returns
+        -------
+        Node
+            Liść z minimalnym kosztem.
+        """
+        return min(self.get_leafs(), key=lambda node: node.data)
+
+
 tree = Node(None, None, None)
 print(tree)
+tree.expand()
+min(tree.get_leafs(), key = lambda node : node.data)
