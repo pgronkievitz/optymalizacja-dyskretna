@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pandoc -s --filter pandoc-citeproc README.md -o output.pdf
+pandoc -s --filter pandoc-crossref --filter pandoc-citeproc README.md -o output.pdf
