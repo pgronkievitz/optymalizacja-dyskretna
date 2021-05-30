@@ -1,7 +1,8 @@
 import numpy as np
+from typing import Tuple
 
 
-def get_permutation(arr: np.array, permutaion: np.array):
+def get_permutation(arr: np.array, permutaion: np.array) -> np.array:
     """
     Generuje macierz z zamienionymi kolumnami (w_r w OneNote)
 
@@ -24,7 +25,7 @@ def get_permutation(arr: np.array, permutaion: np.array):
     return arr[:, np.concatenate((permutaion, np.setdiff1d(p, permutaion)))]
 
 
-def max_phi(time_cost : np.ndarray, w_r : np.array):
+def max_phi(time_cost : np.ndarray, w_r : np.array) -> int:
     """
     Oblicza wszystkie phi dla zadanej macierzy czasów, permutacji.
 
@@ -49,7 +50,7 @@ def max_phi(time_cost : np.ndarray, w_r : np.array):
     return max([phi(time_cost, tk, w_r, i) for i in range(0, time_cost.shape[0])])
 
 
-def phi(time_cost, tk, w_r, phi_index):
+def phi(time_cost, tk, w_r, phi_index) -> int:
     """
     Oblicza phi dla zadanej macierzy czasów, permutacji.
 
@@ -78,7 +79,7 @@ def phi(time_cost, tk, w_r, phi_index):
     return suma + minimum
 
 
-def job_matrices(time_cost : np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def job_matrices(time_cost : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Dla podanej macierzy `t` zwraca macierze czasów początkowych i końcowych.
     Parameters
