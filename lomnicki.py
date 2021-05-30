@@ -2,7 +2,43 @@ import numpy as np
 from tree import Node
 
 
-def lomnicki(time_cost):
+def lomnicki(time_cost: np.ndarray) -> list:
+    """
+    Oblicza optymalną kolejność obsługiwanych zadań/mieszkań wykorzystując algorytm Łomnickiego [1]_
+
+    Parameters
+    ----------
+    time_cost : np.ndarray
+        Macierz z kosztami. W wierszach są pracownicy/grupy mające do wykonania zadanie. W kolumnach znajdują się
+        zadania/mieszkania, które mają obsłużyć pracownicy/grupy.
+
+    References
+    ----------
+    [1] Brown, A. P. G., & Lomnicki, Z. A. (1966). Some Applications of the “Branch-and-Bound” Algorithm to the Machine
+    Scheduling Problem. OR, 17(2), 173. doi:10.2307/3007282
+
+    Exampless
+    --------
+    | Maszyna    | Projekt 1 | Projekt 2 | Projekt 3 |
+    |------------|-----------|-----------|-----------|
+    | Tokarka    | 4         | 8         | 1         |
+    | Skrawarka  | 2         | 3         | 7         |
+    | Anodyzacja | 6         | 2         | 5         |
+
+    >>> dane = np.array([
+    ...    [4, 8, 1],
+    ...    [2, 3, 7],
+    ...    [6, 2, 5]
+    ...])
+    >>> lomnicki(dane)
+    [[0, 2, 1]]
+
+    Returns
+    -------
+    list
+        Lisa ze wszystkimi rozwiązaniami (kolumhy liczone są od 0!).
+
+    """
     tree = Node(None, None, None)
     Node.t = time_cost
 
@@ -38,12 +74,14 @@ def lomnicki(time_cost):
     n = [x for x in range(0, tree.t.shape[1])]
     return [node.get_index() + np.setdiff1d(n, node.get_index()).tolist() for node in answers]
 
-
-# Przykład
-m = lomnicki(np.array([
-    [6, 4, 5, 7],
-    [3, 6, 4, 8],
-    [7, 3, 8, 6]
-]))
-
-print(m)
+# Eksport tabeli do LaTeX
+# from pytablewriter import LatexMatrixWriter
+# writer = LatexMatrixWriter()
+# writer.table_name = 'Zadanie'
+# dane = np.array([
+#     [4, 8, 1],
+#     [2, 3, 7],
+#     [6, 2, 5]
+# ])
+# writer.value_matrix = lomnicki(dane)
+# writer.write_table()

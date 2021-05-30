@@ -1,8 +1,12 @@
+"""Moduł obsługujący drzewa dla algorytmu Branch and Bound"""
 import numpy as np
 from phi import max_phi
 
 
 class Node(object):
+    """
+    Klasa Node. Reprezentuje węzeł w drzewie.
+    """
     t = None  # Macierz kosztów
 
     def __init__(self, data, parent, index):
@@ -20,7 +24,7 @@ class Node(object):
 
     def get_index(self) -> list:
         """
-        Zwraca index liścia (listę punków wokół których był rozwijany).
+        Zwraca index liścia (listę węzłów wokół których był rozwijany).
 
         Returns
         -------
@@ -34,7 +38,7 @@ class Node(object):
 
     def expand(self):
         """
-        Rozszerza drzewo w obecnym node (dodaje liście i oblicza max_phi).
+        Rozszerza drzewo w obecnym liściu (dodaje liście i oblicza max_phi).
 
         """
         n = [x for x in range(0, self.t.shape[1])]
