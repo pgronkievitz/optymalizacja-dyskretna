@@ -1,10 +1,5 @@
 import numpy as np
 
-t = np.array([
-    [6, 4, 5, 7],
-    [3, 6, 4, 8],
-    [7, 3, 8, 6]
-])
 
 def get_permutation(arr: np.array, permutaion: np.array):
     """
@@ -109,5 +104,3 @@ def job_matrices(time_cost : np.ndarray) -> tuple[np.ndarray, np.ndarray]:
             tk[i, j] = tp[i, j] + time_cost[i, j]
 
     return tp, tk
-
-print(max_phi(t, [0]))

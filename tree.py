@@ -1,8 +1,9 @@
 import numpy as np
-from phi import max_phi, t
+from phi import max_phi
 
 
 class Node(object):
+    t = None  # Macierz kosztów
 
     def __init__(self, data, parent, index):
         self.parent = parent
@@ -36,10 +37,10 @@ class Node(object):
         Rozszerza drzewo w obecnym node (dodaje liście i oblicza max_phi).
 
         """
-        n = [x for x in range(0, t.shape[1])]
+        n = [x for x in range(0, self.t.shape[1])]
         index = self.get_index()
 
-        nodes = [Node(max_phi(t, index + [x]), self, x) for x in
+        nodes = [Node(max_phi(self.t, index + [x]), self, x) for x in
                  np.setdiff1d(n, index)]
         for node in nodes:
             self.add_child(node)
@@ -71,24 +72,3 @@ class Node(object):
             Liść z minimalnym kosztem.
         """
         return min(self.get_leafs(), key=lambda node: node.data)
-
-
-tree = Node(None, None, None)
-tree.expand()
-upper_bound = 100000
-while expandable_leafs := list(
-        filter(lambda node: node.data <= upper_bound and len(node.get_index()) < t.shape[1] - 1, tree.get_leafs())):
-
-    possible_upper = list(
-        filter(lambda node: node.data <= upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs()))
-    if len(possible_upper):
-        upper_bound = min(possible_upper, key=lambda node: node.data).data
-
-    min(expandable_leafs, key=lambda node: node.data).expand()
-
-answers = list(
-    filter(lambda node: node.data == upper_bound and len(node.get_index()) == t.shape[1] - 1, tree.get_leafs()))
-
-n = [x for x in range(0, t.shape[1])]
-print(answers)
-print([node.get_index() + np.setdiff1d(n, node.get_index()).tolist() for node in answers])
