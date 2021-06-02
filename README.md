@@ -83,4 +83,13 @@ Na [rysunku @fig:gantt2] przestawione zostały wiersze projektu 2 i projektu 3 w
 celu poprawienia czytelności, a także pozostawiono "pustą" komórkę, która
 została "zaoszczędzona" dzięki zoptymalizowaniu uszeregowania.
 
+# Rozwiązanie zadania "dużego"
+
+Program został napisany w Pythonie 3 z wykorzystaniem biblioteki NumPy. Służy
+ona do łatwych operacji na macierzach oraz przyspiesza obliczenia ze względu na
+implementację niektórych funkcji w języku C.
+
+Współczynniki wprowadzone do zadania dla algorytmu zostały wygenerowane losowo.
+Zostały wprowadzone jako macierz
+
 # Bibliografia
