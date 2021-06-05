@@ -29,7 +29,7 @@ def lomnicki(time_cost: np.ndarray) -> tuple:
     ...    [4, 8, 1],
     ...    [2, 3, 7],
     ...    [6, 2, 5]
-    ...])
+    ... ])
     >>> lomnicki(dane)
     ([[0, 2, 1]], [20.0])
 
