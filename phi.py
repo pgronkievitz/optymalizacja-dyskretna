@@ -74,7 +74,11 @@ def phi(time_cost, tk, w_r, phi_index):
         suma = np.sum(time_cost[phi_index,])
     else:
         suma = np.sum(time_cost[phi_index, len(w_r):]) + tk[phi_index, len(w_r) - 1]
-    minimum = np.min(np.sum(time_cost[phi_index + 1:, :][:, len(w_r):], axis=0))
+
+    if len(w_r) == time_cost.shape[1]:
+        minimum = 0
+    else:
+        minimum = np.min(np.sum(time_cost[phi_index + 1:, :][:, len(w_r):], axis=0))
     return suma + minimum
 
 

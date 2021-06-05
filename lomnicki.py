@@ -2,7 +2,7 @@ import numpy as np
 from tree import Node
 
 
-def lomnicki(time_cost: np.ndarray) -> list:
+def lomnicki(time_cost: np.ndarray) -> tuple:
     """
     Oblicza optymalną kolejność obsługiwanych zadań/mieszkań wykorzystując algorytm Łomnickiego [1]_
 
@@ -31,12 +31,12 @@ def lomnicki(time_cost: np.ndarray) -> list:
     ...    [6, 2, 5]
     ...])
     >>> lomnicki(dane)
-    [[0, 2, 1]]
+    ([[0, 2, 1]], [20.0])
 
     Returns
     -------
-    list
-        Lisa ze wszystkimi rozwiązaniami (kolumhy liczone są od 0!).
+    (list, list)
+        (Lisa ze wszystkimi rozwiązaniami (kolumhy liczone są od 0), Lista kosztów danych rozwiązań)
 
     """
     tree = Node(None, None, None)
@@ -48,31 +48,35 @@ def lomnicki(time_cost: np.ndarray) -> list:
 
     # Dopóki są elementy które mogę rozwijać
     while expandable_leafs := list(
-            filter(lambda node: node.data <= upper_bound and len(node.get_index()) < tree.t.shape[1] - 1,
+            filter(lambda node: node.data <= upper_bound and len(node.get_index()) < tree.t.shape[1],
                    tree.get_leafs())):
 
         # Sprawdzam czy mogę obniżyć upper_bound znajdując wszystkie liście oddalone od korzenia o
         # ilość kolumn macierzy timecost - 1 i o koszcie mniejszym niż jest obecnie
         possible_upper = list(
-            filter(lambda node: node.data <= upper_bound and len(node.get_index()) == tree.t.shape[1] - 1,
+            filter(lambda node: node.data <= upper_bound and len(node.get_index()) == tree.t.shape[1],
                    tree.get_leafs()))
 
         # Jeżeli tak to przypisuję nowe upper_bound
         if len(possible_upper):
             upper_bound = min(possible_upper, key=lambda node: node.data).data
 
-        # Rozwijam wierzchołek o najmniejszym koszcie
-        min(expandable_leafs, key=lambda node: node.data).expand()
+        expandable_leafs = list(
+            filter(lambda node: node.data <= upper_bound and len(node.get_index()) < tree.t.shape[1],
+                   expandable_leafs))
+
+        if expandable_leafs:
+            # Rozwijam wierzchołek o najmniejszym koszcie
+            min(expandable_leafs, key=lambda node: node.data).expand()
 
     # Zwracam odpowiedź, jako listę indeksów od korzenia do liścia stanowiącego optymalne rozwiązanie
     # co odpowiada kolejności w jakiej powinny być wykonywanie mieszkania/cokolwiek.
     answers = list(
-        filter(lambda node: node.data == upper_bound and len(node.get_index()) == tree.t.shape[1] - 1,
+        filter(lambda node: node.data == upper_bound and len(node.get_index()) == tree.t.shape[1],
                tree.get_leafs()))
 
-    # Dopisuję ostatni liść
-    n = [x for x in range(0, tree.t.shape[1])]
-    return [node.get_index() + np.setdiff1d(n, node.get_index()).tolist() for node in answers]
+    # Zwracam wynik
+    return [node.get_index() for node in answers], [node.data for node in answers]
 
 # Eksport tabeli do LaTeX
 # from pytablewriter import LatexMatrixWriter
@@ -85,3 +89,10 @@ def lomnicki(time_cost: np.ndarray) -> list:
 # ])
 # writer.value_matrix = lomnicki(dane)
 # writer.write_table()
+
+dane = np.array([
+     [4, 8, 1],
+     [2, 3, 7],
+     [6, 2, 5]
+ ])
+print(lomnicki(dane))
