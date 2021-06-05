@@ -1,14 +1,13 @@
 ---
+lang: pl
 title: Projekt z optymalizacji dyskretnej
 subtitle: Problem szeregowanie
 author:
   - Patryk Gronkiewicz 164157
   - Piotr Krawiec 164165
-documentclass: article
-lang: pl
 bibliography: bibliography.bib
 papersize: A4
-subject: Problem szeregowania
+date: \today
 ---
 
 # Czym jest problem szeregowania?
@@ -82,6 +81,8 @@ co na pewno nie pomaga w optymalności uszeregowania zadań.
 Na [rysunku @fig:gantt2] przestawione zostały wiersze projektu 2 i projektu 3 w
 celu poprawienia czytelności, a także pozostawiono "pustą" komórkę, która
 została "zaoszczędzona" dzięki zoptymalizowaniu uszeregowania.
+
+
 
 # Rozwiązanie zadania "dużego"
 
