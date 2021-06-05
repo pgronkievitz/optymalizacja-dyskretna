@@ -77,22 +77,3 @@ def lomnicki(time_cost: np.ndarray) -> tuple:
 
     # Zwracam wynik
     return [node.get_index() for node in answers], [node.data for node in answers]
-
-# Eksport tabeli do LaTeX
-# from pytablewriter import LatexMatrixWriter
-# writer = LatexMatrixWriter()
-# writer.table_name = 'Zadanie'
-# dane = np.array([
-#     [4, 8, 1],
-#     [2, 3, 7],
-#     [6, 2, 5]
-# ])
-# writer.value_matrix = lomnicki(dane)
-# writer.write_table()
-
-dane = np.array([
-     [4, 8, 1],
-     [2, 3, 7],
-     [6, 2, 5]
- ])
-print(lomnicki(dane))
