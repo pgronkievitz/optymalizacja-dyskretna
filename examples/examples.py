@@ -1,5 +1,5 @@
 import numpy as np
-from lomnicki import lomnicki
+from src.lomnicki import lomnicki
 
 # Zadanie przykładowe
 dane = np.array([

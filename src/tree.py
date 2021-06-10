@@ -1,6 +1,6 @@
 """Moduł obsługujący drzewa dla algorytmu Branch and Bound"""
 import numpy as np
-from phi import max_phi
+from src.phi import max_phi
 
 
 class Node(object):
