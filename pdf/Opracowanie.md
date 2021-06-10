@@ -85,13 +85,15 @@ została „zaoszczędzona” dzięki zoptymalizowaniu uszeregowania. Teraz kosz
 rozwiązania wyniosi 20.
 
 ### Rozwiązanie optymalne z pomocą algorytmu w Pythonie
+
 ```python
 import numpy as np
-from lomnicki import lomnicki
+from src.lomnicki import lomnicki
+
 dane = np.array([
-   [4, 8, 1],
-   [2, 3, 7],
-   [6, 2, 5]
+  [4, 8, 1],
+  [2, 3, 7],
+  [6, 2, 5]
 ])
 print(lomnicki(dane))
 ```
@@ -116,10 +118,12 @@ Współczynniki wprowadzone do zadania dla algorytmu zostały wygenerowane losow
 Zostały wprowadzone jako macierz.
 
 ## Przykład z macierzą (10,5)
+
 ```python
 import numpy as np
-from lomnicki import lomnicki
-dane = np.random.randint(1,15, size=(10,5))
+from src.lomnicki import lomnicki
+
+dane = np.random.randint(1, 15, size=(10, 5))
 print(dane)
 print(lomnicki(dane))
 ```
@@ -147,9 +151,9 @@ W naszym przypadku dało to następujący wynik, liczył się on 28ms.
 
 ```python
 import numpy as np
-from lomnicki import lomnicki
+from src.lomnicki import lomnicki
 
-dane = np.random.randint(1,1000, size=(8,10))
+dane = np.random.randint(1, 1000, size=(8, 10))
 print(dane)
 print(lomnicki(dane))
 ```
